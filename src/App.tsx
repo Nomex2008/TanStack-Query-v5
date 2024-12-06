@@ -1,10 +1,14 @@
 import './App.css'
+import { usePost } from './usePostById'
 import {usePosts} from './usePosts'
 
 const isAuth = true
 
 function App() {
+  const {post} = usePost(1)
   const {data, isLoading} = usePosts(isAuth)
+
+  console.log(post)
 
   return (
     <>
