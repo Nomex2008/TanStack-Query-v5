@@ -8,7 +8,7 @@ const getData = async (id: number) => {
   }
 
 export function usePost(id:number) {
-  const {data, isLoading, isSuccess, isError} = useQuery({
+  const {data, isLoading, isSuccess, isError, refetch} = useQuery({
     queryKey: ['post', id], 
     queryFn: () => getData(id),
     select: data => data.data,
@@ -22,6 +22,8 @@ export function usePost(id:number) {
   useEffect(() => {
     if(isError) console.log('Error data fetched')
   },[isError])
+
+  refetch()
 
   return {post: data, isLoading}
 }

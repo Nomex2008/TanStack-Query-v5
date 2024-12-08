@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import './App.css'
 import { usePost } from './usePostById'
 import {usePosts} from './usePosts'
@@ -8,11 +9,17 @@ function App() {
   const {post} = usePost(1)
   const {data, isLoading} = usePosts(isAuth)
 
+  const queryClient = useQueryClient()
+
   console.log(post)
 
   return (
     <>
       <h1>React Query</h1>
+
+      <button onClick={() => {
+        queryClient.invalidateQueries({queryKey: ['posts']})
+      }}>Invalidate Posts</button>
 
       <div>
         {isLoading
