@@ -7,12 +7,24 @@ const getData = async () => {
     return axios.get<IPost[]>('https://jsonplaceholder.typicode.com/posts')
   }
 
+  const initialData: {data: IPost[]} = {
+    data: [
+      {
+        body: 'Initial body',
+        id: 0,
+        title: 'Initial title',
+        userId: 0,
+      }
+    ]
+  }
+
 export function usePosts(isAuth: boolean) {
   const {data, error, isLoading, isSuccess, isError} = useQuery({
     queryKey: ['posts'], 
     queryFn: getData,
     select: data => data.data,
-    enabled: isAuth
+    enabled: isAuth,
+    initialData
   })
 
   useEffect(() => {
