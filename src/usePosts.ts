@@ -24,7 +24,8 @@ export function usePosts(isAuth: boolean) {
     queryFn: getData,
     select: data => data.data,
     enabled: isAuth,
-    initialData
+    initialData,
+    staleTime: 1000,
   })
 
   useEffect(() => {

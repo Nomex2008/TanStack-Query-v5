@@ -8,15 +8,17 @@ import {usePosts} from './usePosts'
 const isAuth = true
 
 function App() {
+  const queryClient = useQueryClient()
   const {post} = usePost(1)
   const {data, isLoading} = usePosts(isAuth)
 
   const {mutate, isPending} = useMutation({
     mutationKey: ['add post'],
-    mutationFn: async (newPost: Omit<IPost, 'id'>) => axios.post('https://jsonplaceholder.typicode.com/posts', newPost)
+    mutationFn: async (newPost: Omit<IPost, 'id'>) => axios.post('https://jsonplaceholder.typicode.com/posts', newPost),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['posts']})
+    }
   })
-
-  const queryClient = useQueryClient()
 
   console.log(post)
 
